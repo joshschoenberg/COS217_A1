@@ -5,6 +5,7 @@
 enum Statetype {NORMAL_CODE, IN_STRING, IGNORED_CHARACTER_IN_STRING, 
 IN_CHAR_LITERAL, IGNORED_CHARACTER_IN_CHAR_LITERAL, MAYBE_COMMENT_START, 
 IN_COMMENT, MAYBE_LEAVING_COMMENT};
+int ERROR_LINE;
 
 /* Function when reading character for normal code. Takes in a character c, 
 prints the character to stdout (unless it changes to the MAYBE_COMMENT state),
@@ -156,11 +157,11 @@ enum Statetype handleMaybeLeavingCommentState(char c)
 return state;
 }
 
-/* Delete all comments in code. Return EXIT_SUCCESS if there are no unterminated
-comments and EXIT_FAILURE if there are. */ 
+/* Read in characters and delete all comments in code. Return EXIT_SUCCESS if 
+there are no unterminated comments and EXIT_FAILURE if there are. */ 
 int main(void) {
     /* Read in character, one at a time */
-char c;
+int c;
 int ERROR_LINE = 2;
 /* The first state is NormalCode */
 enum Statetype state = NORMAL_CODE;
@@ -200,5 +201,5 @@ if (state == IN_COMMENT | state == MAYBE_LEAVING_COMMENT) {
     exit(EXIT_FAILURE);
 }
 /* Return EXIT_SUCCESS if it doesn't end in an error */
-else return 0;
+else return EXIT_SUCCESS;
 }
