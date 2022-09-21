@@ -107,7 +107,7 @@ enum Statetype handleMaybeCommentStartState(int c)
     }
     /* If start of string literal, print first "/" and change state */
     else if (c =='"') {
-        printf("/%c", c)
+        printf("/%c", c);
         state = IN_STRING;
     }
     /* If in comment now, print space for the comment and change state */
@@ -117,7 +117,7 @@ enum Statetype handleMaybeCommentStartState(int c)
     } 
     /* Otherwise, print the "/" and the new character and change state */
     else {
-        printf("/%c", c)
+        printf("/%c", c);
         state = NORMAL_CODE;
     }
     return state;
