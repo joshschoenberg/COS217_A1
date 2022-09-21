@@ -152,7 +152,7 @@ enum Statetype handleMaybeLeavingCommentState(int c)
         printf("");
         state = MAYBE_LEAVING_COMMENT;
     }
-    if (c == '/') {
+    else if (c == '/') {
         printf("");
         state = NORMAL_CODE;
     }
@@ -213,6 +213,10 @@ and return EXIT_FAILURE */
 if (state == IN_COMMENT || state == MAYBE_LEAVING_COMMENT) {
     fprintf(stderr, "Error: line %d: unterminated comment", ERROR_LINE_NUMBER);
     exit(EXIT_FAILURE);
+}
+/* print the final "/" if ended in the MAYBE_COMMENT_START state */
+if (state == MAYBE_COMMENT_START) {
+    printf("/");
 }
 /* Return EXIT_SUCCESS if it doesn't end in an error */
 else return EXIT_SUCCESS;
