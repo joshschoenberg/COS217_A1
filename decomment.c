@@ -121,7 +121,7 @@ enum Statetype handleInCommentState(int c)
 {
     enum Statetype state;
     if (c == '*') {
-        printf(" ");
+        printf("");
         state = MAYBE_LEAVING_COMMENT;
     }
     /* Print newline if c is a newline character */ 
@@ -131,7 +131,7 @@ enum Statetype handleInCommentState(int c)
     }
     /* Print whitespace, otherwise */
     else {
-        printf(" ");
+        printf("");
         state = IN_COMMENT;
     }
     return state;
@@ -142,15 +142,15 @@ enum Statetype handleMaybeLeavingCommentState(int c)
 {
     enum Statetype state;
     if (c == '*') {
-        printf(" ");
+        printf("");
         state = MAYBE_LEAVING_COMMENT;
     }
     if (c == '/') {
-        printf(" ");
+        printf("");
         state = NORMAL_CODE;
     }
     else {
-        printf(" ");
+        printf("");
         state = IN_COMMENT;
     }
 return state;
@@ -160,8 +160,8 @@ return state;
 there are no unterminated comments and EXIT_FAILURE if there are. */ 
 int main(void) {
 int c;
-int CURRENT_LINE_NUMBER = 0;
-int ERROR_LINE_NUMBER = 0;
+int CURRENT_LINE_NUMBER = 1;
+int ERROR_LINE_NUMBER;
 /* The first state is NormalCode */
 enum Statetype state = NORMAL_CODE;
 /* Read in character, one at a time, and update state depending on what 
