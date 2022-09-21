@@ -152,6 +152,11 @@ enum Statetype handleMaybeLeavingCommentState(int c)
         printf("");
         state = MAYBE_LEAVING_COMMENT;
     }
+    /* Print newline if c is a newline character */ 
+    else if (c == '\n') {
+        putchar(c);
+        state = IN_COMMENT;
+    }
     else if (c == '/') {
         printf("");
         state = NORMAL_CODE;
@@ -211,14 +216,13 @@ while ((c = getchar()) != EOF) {
 /* print failed line to stderr stream if there is unterminated error, 
 and return EXIT_FAILURE */
 if (state == IN_COMMENT || state == MAYBE_LEAVING_COMMENT) {
-    fprintf(stderr, "Error: line %d: unterminated comment", ERROR_LINE_NUMBER);
+    fprintf(stderr, "Error: line %d: unterminated comment\n", ERROR_LINE_NUMBER);
     exit(EXIT_FAILURE);
 }
 /* print the final "/" if ended in the MAYBE_COMMENT_START state */
-else if (state == MAYBE_COMMENT_START) {
+if (state == MAYBE_COMMENT_START) {
     printf("/");
-    return EXIT_SUCCESS;
 }
 /* Return EXIT_SUCCESS if it doesn't end in an error */
-else return EXIT_SUCCESS;
+return EXIT_SUCCESS;
 }
