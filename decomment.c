@@ -11,7 +11,7 @@ int ERROR_LINE;
 prints the character to stdout (unless it changes to the MAYBE_COMMENT state),
  and determines the new state. 
 stdout */
-enum Statetype handleNormalCodeState(char c)
+enum Statetype handleNormalCodeState(int c)
 {
     enum Statetype state;
     if (c == '"') {
@@ -160,12 +160,12 @@ return state;
 /* Read in characters and delete all comments in code. Return EXIT_SUCCESS if 
 there are no unterminated comments and EXIT_FAILURE if there are. */ 
 int main(void) {
-    /* Read in character, one at a time */
 int c;
-int ERROR_LINE = 2;
+int ERROR_LINE_NUMBER = 0;
 /* The first state is NormalCode */
 enum Statetype state = NORMAL_CODE;
-/* Read in character and update state depending on what character c is */ 
+/* Read in character, one at a time, and update state depending on what 
+character c is */ 
 while ((c = getchar()) != EOF) {
     switch (state) {
         case NORMAL_CODE: 
@@ -196,7 +196,7 @@ while ((c = getchar()) != EOF) {
 }
 /* print failed line to stderr stream if there is unterminated error, 
 and return EXIT_FAILURE */
-if (state == IN_COMMENT | state == MAYBE_LEAVING_COMMENT) {
+if (state == IN_COMMENT || state == MAYBE_LEAVING_COMMENT) {
     fprintf(stderr, "Error: Line %d: unterminated error", ERROR_LINE);
     exit(EXIT_FAILURE);
 }
