@@ -160,8 +160,8 @@ return state;
 there are no unterminated comments and EXIT_FAILURE if there are. */ 
 int main(void) {
 int c;
-int ERROR_LINE_NUMBER = 0;
 int CURRENT_LINE_NUMBER = 0;
+int ERROR_LINE_NUMBER = 0;
 /* The first state is NormalCode */
 enum Statetype state = NORMAL_CODE;
 /* Read in character, one at a time, and update state depending on what 
@@ -188,6 +188,10 @@ while ((c = getchar()) != EOF) {
             break;
         case MAYBE_COMMENT_START: 
             state = handleMaybeCommentStartState(c); 
+            /* Updates the line number of the start of the comment */
+            if (state == IN_COMMENT) {
+                ERROR_LINE_NUMBER = CURRENT_LINE_NUMBER;
+            }
             break;
         case IN_COMMENT: 
             state = handleInCommentState(c);
