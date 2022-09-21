@@ -1,15 +1,14 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
-/* Remove all comments while keeping line numbers */
+/* defines constants representing each state in the DFA */
 enum Statetype {NORMAL_CODE, IN_STRING, IGNORED_CHARACTER_IN_STRING, 
 IN_CHAR_LITERAL, IGNORED_CHARACTER_IN_CHAR_LITERAL, MAYBE_COMMENT_START, 
 IN_COMMENT, MAYBE_LEAVING_COMMENT};
 
 /* Function when reading character for normal code. Takes in a character c, 
 prints the character to stdout (unless it changes to the MAYBE_COMMENT state),
- and determines the new state. 
-stdout */
+and determines the new state. */
 enum Statetype handleNormalCodeState(int c)
 {
     enum Statetype state;
@@ -32,7 +31,7 @@ enum Statetype handleNormalCodeState(int c)
 return state;
 }
 /* Function for when in InString state. Takes in a character, c, and prints
-it, and returns the new state */
+it. Returns the new state */
 enum Statetype handleInStringState(int c)
 {
     enum Statetype state;
@@ -163,8 +162,9 @@ enum Statetype handleMaybeLeavingCommentState(int c)
 return state;
 }
 
-/* Read in characters and delete all comments in code. Return EXIT_SUCCESS if 
-there are no unterminated comments and EXIT_FAILURE if there are. */ 
+/* Read in characters from stdin and print them, not including characters that are 
+part of a comment. Return EXIT_SUCCESS if there are no unterminated comments and 
+EXIT_FAILURE if there are. */ 
 int main(void) {
 int c;
 int CURRENT_LINE_NUMBER = 1;
