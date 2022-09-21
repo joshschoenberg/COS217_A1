@@ -11,7 +11,7 @@ int ERROR_LINE;
 prints the character to stdout (unless it changes to the MAYBE_COMMENT state),
  and determines the new state. 
 stdout */
-enum Statetype handleNormalCodeState(char c)
+enum Statetype handleNormalCodeState(int c)
 {
     enum Statetype state;
     if (c == '"') {
@@ -34,7 +34,7 @@ return state;
 }
 /* Function for when in InString state. Takes in a character, c, and prints
 it, and returns the new state */
-enum Statetype handleInStringState(char c)
+enum Statetype handleInStringState(int c)
 {
     enum Statetype state;
     if (c == '\\') {
@@ -53,7 +53,7 @@ return state;
 }
 /* Function for when in IGNORED_CHARACTER_IN_STRING state. Takes in a character,
  c, prints it, and returns the new state */
-enum Statetype handleIgnoredCharacterInStringState(char c)
+enum Statetype handleIgnoredCharacterInStringState(int c)
 {
     enum Statetype state;
     printf("%c", c);
@@ -62,7 +62,7 @@ enum Statetype handleIgnoredCharacterInStringState(char c)
 }
 /* Function for when in IN_CHAR_LITERAL state. Takes in a character, c, 
 prints it, and returns the new state */
-enum Statetype handleInCharLiteralState(char c)
+enum Statetype handleInCharLiteralState(int c)
 {
     enum Statetype state;
     if (c == '\\') {
@@ -81,7 +81,7 @@ return state;
 }
 /* Function for IgnoredCharacterInCharLiteral State. Takes in a character, c, 
 prints it, and returns the new state */ 
-enum Statetype handleIgnoredCharacterInCharLiteral(char c) 
+enum Statetype handleIgnoredCharacterInCharLiteral(int c) 
 {
     enum Statetype state;   
     printf("%c", c);
@@ -93,7 +93,7 @@ enum Statetype handleIgnoredCharacterInCharLiteral(char c)
 /* Function for MAYBE_COMMENT_START state. Takes in a character, c, 
 prints it and the "/" (if the new state is not IN_COMMENT), and returns 
 the new state */
-enum Statetype handleMaybeCommentStartState(char c)
+enum Statetype handleMaybeCommentStartState(int c)
 {
     enum Statetype state;
     /* If another "/", print the first one  and remain in state */
@@ -118,7 +118,7 @@ enum Statetype handleMaybeCommentStartState(char c)
 }
 /* Function for InComment state. Takes in a character, c, 
 and returns the new state. Prints whitespace or newline if necessary. */
-enum Statetype handleInCommentState(char c)
+enum Statetype handleInCommentState(int c)
 {
     enum Statetype state;
     if (c == '*') {
@@ -139,7 +139,7 @@ enum Statetype handleInCommentState(char c)
 }
 /* Function for MaybeLeavingComment State. Takes in a character, c, 
 and returns the new state */
-enum Statetype handleMaybeLeavingCommentState(char c)
+enum Statetype handleMaybeLeavingCommentState(int c)
 {
     enum Statetype state;
     if (c == '*') {
