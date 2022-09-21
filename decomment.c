@@ -215,8 +215,9 @@ if (state == IN_COMMENT || state == MAYBE_LEAVING_COMMENT) {
     exit(EXIT_FAILURE);
 }
 /* print the final "/" if ended in the MAYBE_COMMENT_START state */
-if (state == MAYBE_COMMENT_START) {
+else if (state == MAYBE_COMMENT_START) {
     printf("/");
+    return EXIT_SUCCESS;
 }
 /* Return EXIT_SUCCESS if it doesn't end in an error */
 else return EXIT_SUCCESS;
