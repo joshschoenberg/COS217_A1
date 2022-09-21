@@ -15,18 +15,18 @@ enum Statetype handleNormalCodeState(char c)
 {
     enum Statetype state;
     if (c == '"') {
-        printf("%c", c);
+        putchar(c);
         state = IN_STRING;
     }
     else if (c == '\'') {
-        printf("%c", c);
+        putchar(c);
         state = IN_CHAR_LITERAL;
     } 
     else if (c == '/') {
         state = MAYBE_COMMENT_START;
     }
     else  {
-        printf("%c", c);
+        putchar(c);
         state = NORMAL_CODE; 
         
 }
