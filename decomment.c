@@ -11,7 +11,7 @@ int ERROR_LINE;
 prints the character to stdout (unless it changes to the MAYBE_COMMENT state),
  and determines the new state. 
 stdout */
-enum Statetype handleNormalCodeState(int c)
+enum Statetype handleNormalCodeState(char c)
 {
     enum Statetype state;
     if (c == '"') {
