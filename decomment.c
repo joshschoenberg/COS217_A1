@@ -5,7 +5,6 @@
 enum Statetype {NORMAL_CODE, IN_STRING, IGNORED_CHARACTER_IN_STRING, 
 IN_CHAR_LITERAL, IGNORED_CHARACTER_IN_CHAR_LITERAL, MAYBE_COMMENT_START, 
 IN_COMMENT, MAYBE_LEAVING_COMMENT};
-int ERROR_LINE;
 
 /* Function when reading character for normal code. Takes in a character c, 
 prints the character to stdout (unless it changes to the MAYBE_COMMENT state),
@@ -38,15 +37,15 @@ enum Statetype handleInStringState(int c)
 {
     enum Statetype state;
     if (c == '\\') {
-    printf("%c", c);
+     putchar(c);
     state = IGNORED_CHARACTER_IN_STRING;
     }
     else if (c == '"') {
-       printf("%c", c);
+       putchar(c);
         state = NORMAL_CODE;
     } 
     else {
-        printf("%c", c);
+         putchar(c);
     state = IN_STRING;
 }
 return state;
@@ -56,7 +55,7 @@ return state;
 enum Statetype handleIgnoredCharacterInStringState(int c)
 {
     enum Statetype state;
-    printf("%c", c);
+    putchar(c);
     state = IN_STRING;
     return state; 
 }
@@ -66,16 +65,16 @@ enum Statetype handleInCharLiteralState(int c)
 {
     enum Statetype state;
     if (c == '\\') {
-    printf("%c", c);
-    state = IGNORED_CHARACTER_IN_CHAR_LITERAL;
+        putchar(c);
+        state = IGNORED_CHARACTER_IN_CHAR_LITERAL;
     }
     else if (c == '\'') {
-        printf("%c", c);
+        putchar(c);
         state = NORMAL_CODE;
     } 
     else {
-    printf("%c", c);
-    state = IN_CHAR_LITERAL;
+        putchar(c);
+        state = IN_CHAR_LITERAL;
 }
 return state;
 }
@@ -84,7 +83,7 @@ prints it, and returns the new state */
 enum Statetype handleIgnoredCharacterInCharLiteral(int c) 
 {
     enum Statetype state;   
-    printf("%c", c);
+    putchar(c);
     state = IN_CHAR_LITERAL;
     return state;
     
@@ -98,11 +97,11 @@ enum Statetype handleMaybeCommentStartState(int c)
     enum Statetype state;
     /* If another "/", print the first one  and remain in state */
     if (c == '/') {
-        printf("/%c", c);
+        putchar(c);
         state = MAYBE_COMMENT_START;
     }
     else if (c == '\'') {
-        printf("/%c", c);
+        putchar(c);
         state = IN_CHAR_LITERAL;
     }
     /* If in comment now, print spaces for the "/" and the "*" */
@@ -111,7 +110,7 @@ enum Statetype handleMaybeCommentStartState(int c)
         state = IN_COMMENT;
     } 
     else {
-        printf("/%c", c);
+        putchar(c);
         state = NORMAL_CODE;
     }
     return state;
@@ -127,7 +126,7 @@ enum Statetype handleInCommentState(int c)
     }
     /* Print newline if c is a newline character */ 
     else if (c == '\n') {
-        printf("%c", c);
+        putchar(c);
         state = IN_COMMENT;
     }
     /* Print whitespace, otherwise */
@@ -162,11 +161,15 @@ there are no unterminated comments and EXIT_FAILURE if there are. */
 int main(void) {
 int c;
 int ERROR_LINE_NUMBER = 0;
+int CURRENT_LINE_NUMBER = 0;
 /* The first state is NormalCode */
 enum Statetype state = NORMAL_CODE;
 /* Read in character, one at a time, and update state depending on what 
 character c is */ 
 while ((c = getchar()) != EOF) {
+    if (c == "\n") {
+        CURRENT_LINE_NUMBER += 1; 
+    }
     switch (state) {
         case NORMAL_CODE: 
             state = handleNormalCodeState(c);
@@ -197,7 +200,7 @@ while ((c = getchar()) != EOF) {
 /* print failed line to stderr stream if there is unterminated error, 
 and return EXIT_FAILURE */
 if (state == IN_COMMENT || state == MAYBE_LEAVING_COMMENT) {
-    fprintf(stderr, "Error: Line %d: unterminated error", ERROR_LINE);
+    fprintf(stderr, "Error: Line %d: unterminated comment", ERROR_LINE);
     exit(EXIT_FAILURE);
 }
 /* Return EXIT_SUCCESS if it doesn't end in an error */
