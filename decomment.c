@@ -204,7 +204,7 @@ while ((c = getchar()) != EOF) {
 /* print failed line to stderr stream if there is unterminated error, 
 and return EXIT_FAILURE */
 if (state == IN_COMMENT || state == MAYBE_LEAVING_COMMENT) {
-    fprintf(stderr, "Error: Line %d: unterminated comment", ERROR_LINE_NUMBER);
+    fprintf(stderr, "Error: line %d: unterminated comment", ERROR_LINE_NUMBER);
     exit(EXIT_FAILURE);
 }
 /* Return EXIT_SUCCESS if it doesn't end in an error */
