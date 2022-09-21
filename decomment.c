@@ -106,7 +106,7 @@ enum Statetype handleMaybeCommentStartState(int c)
     }
     /* If in comment now, print spaces for the "/" and the "*" */
     else if (c == '*') {
-        printf("  ");
+        printf(" ");
         state = IN_COMMENT;
     } 
     else {
