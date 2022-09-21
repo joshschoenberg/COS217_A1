@@ -21,15 +21,9 @@ Documents that are referenced directly by the course's website. Such documents i
 
 The course's textbooks.
 
-The man pages on the armlab cluster.
-
 The course's current staff members outside of class time through office hours.
 
-The course's current staff members outside of class time through meetings.
-
 The course's current staff members outside of class time through Ed.
-
-The course's current staff members outside of class time through e-mail.
 
 Current Intro Lab TAs through visits to the Intro COS Lab.
 
@@ -50,7 +44,8 @@ None
 
 ------------------------------------------------------------------------
 What is your assessment of the assignment? Was it helpful? Was it fun?
-
+Very helpful for understanding DFAs and the basics of C programming. 
+It was really fun to debug, and it was also fun to construct the DFA. 
 
 
 ------------------------------------------------------------------------
