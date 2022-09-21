@@ -123,12 +123,11 @@ enum Statetype handleMaybeCommentStartState(int c)
     return state;
 }
 /* Function for InComment state. Takes in a character, c, 
-and returns the new state. Prints whitespace or newline if necessary. */
+and returns the new state. Prints newline if necessary. */
 enum Statetype handleInCommentState(int c)
 {
     enum Statetype state;
     if (c == '*') {
-        printf("");
         state = MAYBE_LEAVING_COMMENT;
     }
     /* Print newline if c is a newline character */ 
@@ -136,9 +135,8 @@ enum Statetype handleInCommentState(int c)
         putchar(c);
         state = IN_COMMENT;
     }
-    /* Print whitespace, otherwise */
+    /* Print nothing, otherwise */
     else {
-        printf("");
         state = IN_COMMENT;
     }
     return state;
@@ -149,7 +147,6 @@ enum Statetype handleMaybeLeavingCommentState(int c)
 {
     enum Statetype state;
     if (c == '*') {
-        printf("");
         state = MAYBE_LEAVING_COMMENT;
     }
     /* Print newline if c is a newline character */ 
@@ -158,11 +155,9 @@ enum Statetype handleMaybeLeavingCommentState(int c)
         state = IN_COMMENT;
     }
     else if (c == '/') {
-        printf("");
         state = NORMAL_CODE;
     }
     else {
-        printf("");
         state = IN_COMMENT;
     }
 return state;
