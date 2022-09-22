@@ -1,4 +1,4 @@
-NORMAL_CODE <-- start state
+NORMAL_CODE (accept) <-- start state
     ": IN_STRING
     ': IN_CHAR_LITERAL
     /: MAYBE_COMMENT_START
