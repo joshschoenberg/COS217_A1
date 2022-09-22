@@ -79,7 +79,7 @@ return state;
 }
 /* Function for IgnoredCharacterInCharLiteral State. Takes in a 
 character, c, prints it, and returns the state IN_CHAR_LITERAL */ 
-enum Statetype handleIgnoredCharacterInCharLiteral(int c) 
+enum Statetype handleIgnoredCharacterInCharLiteralState(int c) 
 {
     enum Statetype state;   
     putchar(c);
@@ -169,15 +169,16 @@ unterminated comments and EXIT_FAILURE if there are. */
 int main(void) {
 /* c is the character that will be read in from stdin */ 
 int c;
-int CURRENT_LINE_NUMBER = 1;
-int ERROR_LINE_NUMBER;
+int current_line_number = 1;
+int error_line_number;
 /* The first state is NormalCode */
 enum Statetype state = NORMAL_CODE;
-/* Read in character, one at a time, and update state depending on what 
-character c is */ 
+/* Read in character, one at a time, until reaching EOF and update state
+depending on what character c is */ 
 while ((c = getchar()) != EOF) {
+    /* Keep track of current line number */ 
     if (c == '\n') {
-        CURRENT_LINE_NUMBER += 1; 
+        current_line_number += 1; 
     }
     switch (state) {
         case NORMAL_CODE: 
@@ -193,13 +194,13 @@ while ((c = getchar()) != EOF) {
             state = handleInCharLiteralState(c);
             break;
         case IGNORED_CHARACTER_IN_CHAR_LITERAL: 
-            state = handleIgnoredCharacterInCharLiteral(c);
+            state = handleIgnoredCharacterInCharLiteralState(c);
             break;
         case MAYBE_COMMENT_START: 
             state = handleMaybeCommentStartState(c); 
             /* Updates the line number of the start of the comment */
             if (state == IN_COMMENT) {
-                ERROR_LINE_NUMBER = CURRENT_LINE_NUMBER;
+                error_line_number = current_line_number;
             }
             break;
         case IN_COMMENT: 
@@ -214,7 +215,7 @@ while ((c = getchar()) != EOF) {
 and return EXIT_FAILURE */
 if (state == IN_COMMENT || state == MAYBE_LEAVING_COMMENT) {
     fprintf(stderr, "Error: line %d: unterminated comment\n", 
-                                                    ERROR_LINE_NUMBER);
+                                                    error_line_number);
     exit(EXIT_FAILURE);
 }
 /* print the final "/" if ended in the MAYBE_COMMENT_START state */
